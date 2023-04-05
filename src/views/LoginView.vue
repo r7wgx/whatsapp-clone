@@ -7,13 +7,26 @@
         </div>
         <div class="w-5/6 m-auto md:px-40 h-96 rounded-lg my-10 max-md:px-5 bg-white flex flex-wrap items-center max-md:justify-center md:justify-between">
             <h1 class="text-2xl">Don't just use whatsapp from your computer, <br> use it from anywhere</h1>
-            <button class="bg-[#111] hover:bg-[#11111111] hover:text-[#111] border-[#111111] border-2  py-4 px-5 gap-4 items-center justify-center text-[#e9edef] rounded-lg flex">
-                <img src="google.png" class="w-8 h-8">
-                <GoogleLogin/>
-                <span>sign in google account</span>
-            </button>
+            <div class="shadow-md items-center justify-center text-[#e9edef] rounded-lg flex">
+                <GoogleLogin :callback="callback"/>
+            </div>
         </div>
 </template>
 
 <script setup>
+import axios from "axios";
+
+const callback = async (response) => {
+    console.log(response);
+    try {
+        let res = await axios.post("http://localhost:4001/api/google-login", {
+        token: response.credential
+        }, {
+        withCredentials: true
+        });
+        console.log(res.data);
+    } catch (error) {
+        console.log("login error whatsapp", error.response);
+    }
+}
 </script>
