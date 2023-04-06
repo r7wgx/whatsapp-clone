@@ -10,3 +10,5 @@
 - Vue Google Login
 - Vue Router
 - Vue Material Design Icons
+- Cors
+- Express
