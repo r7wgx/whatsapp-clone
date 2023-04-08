@@ -3,30 +3,26 @@
         <div :class="open == true && 'max-md:hidden'" id="header" class="fixed max-md:w-full w-1/4 h-screen border-r border-[#2d3c45b5]">
 
             <div class="w-full bg-[#202c33] flex justify-between p-2">
-                <div 
-                class="rounded-full ml-3 bg-center bg-no-repeat bg-cover w-10 h-10" 
-                style="background-image: url('https://images.unsplash.com/photo-1579305626036-d173361705f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80');" 
-                alt="profile">
-                </div>
+                <img :src="userStore.picture || '' " class="rounded-full w-10" alt="profile">
                 <div class="header-right flex gap-2">
                     <button class="rounded-full hover:bg-[#ffffff1a] w-auto p-2">
                         <AccountGroupIcon fillColor="#aebac1"/>
                     </button>
                     <button class="rounded-full hover:bg-[#ffffff1a] w-auto p-2">
-                        <DotsVerticalIcon fillColor="#aebac1"/>
+                        <DotsVerticalIcon @click="logout" fillColor="#aebac1"/>
                     </button>
                 </div>
             </div>
             <div class="p-4 flex items-center justify-center w-full">
-                <input placeholder="Search"  class=" releative bg-[#202c33] placeholder:text-gray-500 text-gray-400 focus:outline-none py-2 text-sm px-10 w-full rounded-lg " type="text">
+                <input @click="findUser = !findUser" placeholder="Search"  class=" releative bg-[#202c33] placeholder:text-gray-500 text-gray-400 focus:outline-none py-2 text-sm px-10 w-full rounded-lg " type="text">
                 <MagnifyIcon fillColor="#aebac1" class="left-4 p-2 absolute"/>
             </div>
             
-            <ChatView class="bg-[#111b21]" v-if="findUser"/>
-            <FindUser class="bg-[#111b21]" v-else/>
+            <FindUser class="bg-[#111b21]" v-if="findUser"/>
+            <ChatView class="bg-[#111b21]" v-else/>
         </div>
 
-        <div v-if="open" :class="open == true && 'max-md:w-full max-md:ml-0'" class="releative h-screen w-3/4 ml-[25%] fixed">
+        <div v-if="userDataForChat.length" :class="open == true && 'max-md:w-full max-md:ml-0'" class="releative h-screen w-3/4 ml-[25%] fixed">
             <MessageView />
         </div>
 
@@ -40,14 +36,32 @@
 </template>
 
 <script setup>
-    import ChatView from './ChatView.vue'
-    import FindUser from './FindUser.vue'
-    import AccountGroupIcon from 'vue-material-design-icons/AccountGroup.vue'
-    import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
-    import MagnifyIcon from 'vue-material-design-icons/Magnify.vue' 
-    import MessageView from './MessageView.vue'
-    import { ref } from 'vue';
+    import ChatView from './ChatView.vue';
+    import FindUser from './FindUser.vue';
+    import AccountGroupIcon from 'vue-material-design-icons/AccountGroup.vue';
+    import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue';
+    import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
+    import MessageView from './MessageView.vue';
+    import { onMounted, ref } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { storeToRefs } from 'pinia';
+    import { useUserStore } from '@/store/user-store.js';
 
-    let open = ref(true)
-    let findUser = ref(true)
+    const userStore = useUserStore();
+    const router = useRouter();
+    const { findUser, userDataForChat } = storeToRefs(userStore)
+
+    const logout = () => {
+        let res = confirm('Are you sure you want to logout?');
+        if(res) userStore.logout(); router.push('/login');
+    }
+
+    onMounted(() => {
+    try {
+        userStore.getAllUsers();
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 </script>
