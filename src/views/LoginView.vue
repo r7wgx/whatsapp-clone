@@ -14,19 +14,15 @@
 </template>
 
 <script setup>
-import axios from "axios";
+import { useUserStore } from '@/store/user-store.js';
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const callback = async (response) => {
-    console.log(response);
-    try {
-        let res = await axios.post("http://localhost:4001/api/google-login", {
-        token: response.credential
-        }, {
-        withCredentials: true
-        });
-        console.log(res.data);
-    } catch (error) {
-        console.log("login error whatsapp", error.response);
-    }
+    await useUserStore().getUserDetailGoogle(response);
+    setTimeout(() => {
+        router.push('/')
+    }, 200);
 }
 </script>
