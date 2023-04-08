@@ -1,5 +1,6 @@
 # WhatsApp Clone 
 
+## tech:
 - Vue3
 - ViteJS
 - Pinia
@@ -13,12 +14,14 @@
 - Cors
 - Express
 
-frontend
+## Frontend
+
+```
 Build Setup
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
+# serve with hot reload at localhost:5173
 $ npm run dev
 
 # build for production and launch server
@@ -27,3 +30,12 @@ $ npm run start
 
 # generate static project
 $ npm run generate
+
+```
+
+## Backend 
+
+```
+$ npm start
+
+````
