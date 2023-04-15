@@ -5,7 +5,7 @@
             <div class="border-l border-green-500 w-full">
                 <div 
                     class="
-                      bg-[#202c33]
+                        bg-[#F0F0F0] 
                         fixed 
                         z-10 
                         min-w-[calc(100vw-420px)] 
@@ -24,12 +24,12 @@
                         >
                         <div 
                         v-if="userDataForChat[0] && userDataForChat[0].firstName"
-                        class="text-[#8696a0]  ml-1 font-semibold">
+                        class="text-gray-900 ml-1 font-semibold">
                             {{ userDataForChat[0].firstName }}
                         </div>
                     </div>
 
-                    <DotsVerticalIcon fillColor="#aebac1" />
+                    <DotsVerticalIcon fillColor="#515151" />
                 </div>
             </div>
 
@@ -49,14 +49,14 @@
                 <div v-if="currentChat && currentChat.length" class="px-20 text-sm">
 
                     <div v-for="msg in currentChat[0].messages" :key="msg">
-                        <div v-if="msg.sub === sub"  class="flex justify-end space-x-1 w-[calc(100%-50px)] float-right">
-                            <div class="inline-block bg-[#005c4b] text-[#e9edef] p-2 rounded-md my-1">
+                        <div v-if="msg.sub === sub" class="flex w-[calc(100%-50px)]">
+                            <div class="inline-block bg-white p-2 rounded-md my-1">
                                 {{ msg.message }}
                             </div>
                         </div>
 
-                        <div v-else class="flex w-[calc(100%-50px)]">
-                            <div class="inline-block bg-[#202c33] text-[#e9edef] p-2 rounded-md my-1">
+                        <div v-else class="flex justify-end space-x-1 w-[calc(100%-50px)] float-right">
+                            <div class="inline-block bg-green-200 p-2 rounded-md my-1">
                                 {{ msg.message }}
                             </div>
                         </div>
@@ -65,10 +65,10 @@
                 </div>
             </div>
 
-            <div class="w-[calc(100vw-420px)] p-2.5 z-10 bg-[#202c33] fixed bottom-0">
+            <div class="w-[calc(100vw-420px)] p-2.5 z-10 bg-[#F0F0F0] fixed bottom-0">
                 <div class="flex items-center justify-center">
-                    <EmoticonExcitedOutlineIcon :size="27" fillColor="#aebac1" class="mx-1.5" />
-                    <PaperclipIcon :size="27" fillColor="#aebac1" class="mx-1.5 mr-3" />
+                    <EmoticonExcitedOutlineIcon :size="27" fillColor="#515151" class="mx-1.5" />
+                    <PaperclipIcon :size="27" fillColor="#515151" class="mx-1.5 mr-3" />
                     <input 
                     v-model="message"
                     class="
@@ -79,10 +79,10 @@
                         w-full
                         py-3
                         px-4
-                        placeholder:text-gray-500 text-gray-400
+                        text-gray-700
                         leading-tight
                         focus:outline-none 
-                        focus:shadow-outline  bg-[#2a3942]
+                        focus:shadow-outline
                     "
                     autocomplete="off"
                     type="text"
@@ -94,7 +94,7 @@
                         @click="sendMessage" 
                         class="ml-3 p-2 w-12 flex items-center justify-center"
                     >
-                        <SendIcon fillColor="#aebac1" />
+                        <SendIcon fillColor="#515151" />
                     </button>
                 </div>
             </div>
@@ -162,12 +162,10 @@ const sendMessage = async () => {
 
 <style>
 #BG {
-    background: url('/bg-chat-dark.png') no-repeat center;
+    background: url('/message-bg.png') no-repeat center;
     width: 100%;
     height: 100%;
     position: fixed;
     z-index: -1;
-    background-repeat: repeat;
-    opacity: 0.1;
 }
 </style>
